@@ -46,7 +46,7 @@ pipeline {
                 bat ''' 
                 docker run --rm -v C:\\Users\\modan\\jenkins_workspace\\mini-calculator:/playbooks \
                 quay.io/ansible/ansible-runner:devel \
-                ansible-playbook /playbooks/deploy.yml
+                ansible-playbook deploy.yml
                 '''
             }
         }
