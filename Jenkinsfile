@@ -43,9 +43,9 @@ pipeline {
 
         stage('Deploy with Ansible') {
             steps {
-                bat '''
+                bat ''' 
                 docker run --rm -v C:\\Users\\modan\\jenkins_workspace\\mini-calculator:/playbooks \
-                ansible/ansible:devel \
+                quay.io/ansible/ansible-runner:devel \
                 ansible-playbook /playbooks/deploy.yml
                 '''
             }
