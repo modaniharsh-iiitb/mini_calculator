@@ -21,15 +21,15 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("myapp:latest")
+                    docker.build("mini_calculator:latest")
                 }
             }
         }
 
         stage('Push to Local Registry (optional)') {
             steps {
-                bat 'docker tag myapp:latest localhost:5000/myapp:latest'
-                bat 'docker push localhost:5000/myapp:latest'
+                bat 'docker tag mini_calculator:latest localhost:5000/mini_calculator:latest'
+                bat 'docker push localhost:5000/mini_calculator:latest'
             }
         }
 
