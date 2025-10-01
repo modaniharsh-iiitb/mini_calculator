@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven'   // Configure Maven under Jenkins Global Tool Config
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-repo.git'
+            }
+        }
+
+        stage('Build with Maven') {
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("myapp:latest")
+                }
+            }
+        }
+
+        stage('Push to Local Registry (optional)') {
+            steps {
+                sh 'docker tag myapp:latest localhost:5000/myapp:latest'
+                sh 'docker push localhost:5000/myapp:latest'
+            }
+        }
+
+        stage('Deploy with Ansible') {
+            steps {
+                sh 'ansible-playbook -i inventory deploy.yml'
+            }
+        }
+    }
+}

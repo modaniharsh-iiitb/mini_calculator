@@ -1,0 +1,14 @@
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Stop old container
+      community.docker.docker_container:
+        name: myapp
+        state: absent
+
+    - name: Run new container
+      community.docker.docker_container:
+        name: myapp
+        image: myapp:latest
+        ports:
+          - "8081:8080"
