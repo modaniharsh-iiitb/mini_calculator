@@ -39,14 +39,5 @@ pipeline {
                 sh 'docker run -i mini-calculator < input.txt'
             }
         }
-
-        stage('Deploy with Ansible') {
-            steps {
-                bat '''
-                REM Run Ansible playbook inside WSL
-                wsl ansible-playbook /mnt/c/Users/modan/jenkins_workspace/mini-calculator/deploy.yml
-                '''
-            }
-        }
     }
 }
