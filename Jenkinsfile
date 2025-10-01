@@ -40,13 +40,11 @@ pipeline {
             }
         }
 
-
         stage('Deploy with Ansible') {
             steps {
-                bat ''' 
-                docker run --rm -v C:\\Users\\modan\\jenkins_workspace\\mini-calculator:/playbooks \
-                quay.io/ansible/ansible-runner:devel \
-                ansible-playbook deploy.yml
+                bat '''
+                REM Run Ansible playbook inside WSL
+                wsl ansible-playbook /mnt/c/Users/modan/jenkins_workspace/mini-calculator/deploy.yml
                 '''
             }
         }
