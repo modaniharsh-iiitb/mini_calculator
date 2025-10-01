@@ -43,7 +43,11 @@ pipeline {
 
         stage('Deploy with Ansible') {
             steps {
-                bat 'ansible-playbook -i inventory deploy.yml'
+                bat '''
+                docker run --rm -v C:\\Users\\modan\\jenkins_workspace\\mini-calculator:/playbooks \
+                ansible/ansible:devel \
+                ansible-playbook /playbooks/deploy.yml
+                '''
             }
         }
     }
