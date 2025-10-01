@@ -14,7 +14,7 @@ pipeline {
 
         stage('Build with Maven') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
@@ -28,14 +28,14 @@ pipeline {
 
         stage('Push to Local Registry (optional)') {
             steps {
-                sh 'docker tag myapp:latest localhost:5000/myapp:latest'
-                sh 'docker push localhost:5000/myapp:latest'
+                bat 'docker tag myapp:latest localhost:5000/myapp:latest'
+                bat 'docker push localhost:5000/myapp:latest'
             }
         }
 
         stage('Deploy with Ansible') {
             steps {
-                sh 'ansible-playbook -i inventory deploy.yml'
+                bat 'ansible-playbook -i inventory deploy.yml'
             }
         }
     }
