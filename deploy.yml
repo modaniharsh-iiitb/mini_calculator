@@ -3,12 +3,12 @@
   tasks:
     - name: Stop old container
       community.docker.docker_container:
-        name: myapp
+        name: mini-calculator
         state: absent
 
     - name: Run new container
       community.docker.docker_container:
-        name: myapp
-        image: myapp:latest
+        name: mini-calculator
+        image: mini-calculator:latest
         ports:
           - "8081:8080"
