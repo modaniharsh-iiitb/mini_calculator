@@ -38,14 +38,6 @@ pipeline {
             }
         }
 
-
-        stage('Push to Local Registry (optional)') {
-            steps {
-                sh 'docker tag mini_calculator:latest localhost:5000/mini_calculator:latest'
-                sh 'docker push localhost:5000/mini_calculator:latest'
-            }
-        }
-
         stage('Run Calculator Test') {
             steps {
                 writeFile file: 'input.txt', text: '1\n9\n0\n'
