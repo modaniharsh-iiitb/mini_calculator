@@ -5,6 +5,10 @@ pipeline {
         maven 'Maven'
     }
 
+    environment {
+        RECIPIENTS = 'modani.harsh@gmail.com'
+    }
+
     stages {
         stage('Checkout') {
             steps {
