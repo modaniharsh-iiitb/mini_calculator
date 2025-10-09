@@ -46,9 +46,13 @@ pipeline {
         }
 
         stage('Deploy via Ansible') {
+            agent {
+                docker { image 'cytopia/ansible:latest' }
+            }
             steps {
-                sh '/home/modaniharsh/.local/bin/ansible-playbook -i inventory deploy.yml'
+                sh 'ansible-playbook -i inventory deploy.yml'
             }
         }
+
     }
 }
