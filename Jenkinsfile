@@ -50,7 +50,11 @@ pipeline {
                 docker { image 'cytopia/ansible:latest' }
             }
             steps {
-                sh 'ansible-playbook -i inventory deploy.yml'
+                sh '''
+                    export ANSIBLE_LOCAL_TEMP=$PWD/.ansible/tmp
+                    mkdir -p $ANSIBLE_LOCAL_TEMP
+                    ansible-playbook -i inventory deploy.yml
+                '''
             }
         }
 
