@@ -21,7 +21,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("mini_calculator:latest")
+                    sh 'docker build -t mini_calculator:latest .'
                 }
             }
         }
