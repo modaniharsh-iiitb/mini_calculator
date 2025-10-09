@@ -46,9 +46,6 @@ pipeline {
         }
 
         stage('Deploy via Ansible') {
-            agent {
-                docker { image 'cytopia/ansible:latest' }
-            }
             steps {
                 sh 'ansible-playbook -i inventory deploy.yml'
             }
