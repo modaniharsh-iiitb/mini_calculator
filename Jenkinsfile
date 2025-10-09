@@ -41,7 +41,7 @@ pipeline {
         stage('Run Calculator Test') {
             steps {
                 writeFile file: 'input.txt', text: '1\n9\n0\n'
-                sh 'docker run -i mini-calculator < input.txt'
+                sh 'docker run -i mini_calculator:latest < input.txt'
             }
         }
 
