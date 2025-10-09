@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven'   // Configure Maven under Jenkins Global Tool Config
+        maven 'Maven'
     }
 
     stages {
@@ -14,7 +14,7 @@ pipeline {
 
         stage('Build with Maven') {
             steps {
-                bat 'mvn clean package -DskipTests'
+                sh 'mvn clean package -DskipTests'
             }
         }
 
@@ -26,10 +26,23 @@ pipeline {
             }
         }
 
+        stage('Push to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh """
+                        docker login -u %DOCKER_USER% -p %DOCKER_PASS%
+                        docker tag mini_calculator:latest %DOCKER_USER%/mini_calculator:latest
+                        docker push %DOCKER_USER%/mini_calculator:latest
+                    """
+                }
+            }
+        }
+
+
         stage('Push to Local Registry (optional)') {
             steps {
-                bat 'docker tag mini_calculator:latest localhost:5000/mini_calculator:latest'
-                bat 'docker push localhost:5000/mini_calculator:latest'
+                sh 'docker tag mini_calculator:latest localhost:5000/mini_calculator:latest'
+                sh 'docker push localhost:5000/mini_calculator:latest'
             }
         }
 
@@ -37,6 +50,12 @@ pipeline {
             steps {
                 writeFile file: 'input.txt', text: '1\n9\n0\n'
                 sh 'docker run -i mini-calculator < input.txt'
+            }
+        }
+
+        stage('Deploy via Ansible') {
+            steps {
+                sh 'ansible-playbook -i inventory deploy.yml'
             }
         }
     }
