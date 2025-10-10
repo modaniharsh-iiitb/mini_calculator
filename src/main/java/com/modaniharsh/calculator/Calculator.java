@@ -7,7 +7,7 @@ public class Calculator {
     }
 
     public static long factorial(int x) {
-        int arr[] = new int[x + 1];
+        long arr[] = new long[x + 1];
         arr[0] = 1;
         for (int i = 1; i <= x; i++) {
             arr[i] = i * arr[i - 1];
