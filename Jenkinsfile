@@ -65,18 +65,14 @@ pipeline {
 
     post {
         always {
-            emailext (
-                subject: "Jenkins Build: ${currentBuild.fullDisplayName} (${currentBuild.currentResult})",
-                body: """
-                    <b>Build Result:</b> ${currentBuild.currentResult}<br>
-                    <b>Job:</b> ${env.JOB_NAME}<br>
-                    <b>Build Number:</b> ${env.BUILD_NUMBER}<br>
-                    <b>Triggered by:</b> ${currentBuild.getBuildCauses()[0].userName ?: 'GitHub Webhook'}<br>
-                    <b>Details:</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a>
-                """,
-                to: 'modani.harsh@gmail.com',
-                mimeType: 'text/html'
-            )
+            mail to: 'modani.harsh@gmail.com',
+                subject: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} - ${currentBuild.currentResult}",
+                body: """Build Details:
+Job: ${env.JOB_NAME}
+Build Number: ${env.BUILD_NUMBER}
+Result: ${currentBuild.currentResult}
+URL: ${env.BUILD_URL}
+"""
         }
     }
 }
