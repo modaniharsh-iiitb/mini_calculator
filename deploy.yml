@@ -10,5 +10,6 @@
       community.docker.docker_container:
         name: mini_calculator
         image: mini_calculator:latest
+        interactive: yes
         ports:
           - "8081:8080"
