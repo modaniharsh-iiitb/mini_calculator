@@ -65,14 +65,30 @@ pipeline {
 
     post {
         always {
-            mail to: 'modani.harsh@gmail.com',
-                subject: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} - ${currentBuild.currentResult}",
-                body: """Build Details:
+            script {
+                // Detect build trigger cause
+                def cause = currentBuild.rawBuild.getCauses().collect { it.shortDescription }.join(', ')
+                def triggerSource = "Manual"
+                if (cause.toLowerCase().contains("github")) {
+                    triggerSource = "GitHub Webhook"
+                } else if (cause.toLowerCase().contains("timer")) {
+                    triggerSource = "Scheduled (Timer)"
+                } else if (cause.toLowerCase().contains("branch indexing")) {
+                    triggerSource = "SCM Change / Branch Indexing"
+                }
+
+                // Send email with build and trigger info
+                mail to: 'modani.harsh@gmail.com',
+                    subject: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} - ${currentBuild.currentResult}",
+                    body: """Build Details:
 Job: ${env.JOB_NAME}
 Build Number: ${env.BUILD_NUMBER}
 Result: ${currentBuild.currentResult}
+Triggered By: ${triggerSource}
+Cause: ${cause}
 URL: ${env.BUILD_URL}
 """
+            }
         }
     }
 }
