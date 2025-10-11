@@ -47,9 +47,9 @@ public class App {
                     break;
 
                 case 4:
-                    System.out.print("Enter the base (integer): ");
+                    System.out.print("Enter the base: ");
                     base = scanner.nextDouble();
-                    System.out.print("Enter the exponent (integer): ");
+                    System.out.print("Enter the exponent: ");
                     exponent = scanner.nextDouble();
                     System.out.println("Power: " + Calculator.power(base, exponent));
                     break;

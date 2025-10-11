@@ -7,10 +7,12 @@ public class Calculator {
     }
 
     public static long factorial(int x) {
-        if (x == 0) {
-            return 1;
+        long arr[] = new long[x + 1];
+        arr[0] = 1;
+        for (int i = 1; i <= x; i++) {
+            arr[i] = i * arr[i - 1];
         }
-        return x * factorial(x - 1);
+        return arr[x];
     }
 
     public static double log(double x) {
